@@ -1,0 +1,12 @@
+# lemaf saq project development session
+new -s 'SAQ' -n 'dev-front'
+splitw -v -p 20 
+new-window -n 'ng server' 
+new-window -n 'dev-back'
+splitw -v -p 20 
+selectp -t 0
+new-window -n 'play'
+new-window -n 'psql'
+selectw -t 0
+selectp -t 0
+
