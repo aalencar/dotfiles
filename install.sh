@@ -9,3 +9,7 @@ ln -sfv ${BASEDIR}/vim/vimrc ~/.vimrc
 ln -sfv ${BASEDIR}/tmux/tmux.conf ~/.tmux.conf
 ln -sFhv ${BASEDIR}/tmux/tmux.sessions/ ~/.tmux-sessions
 
+# scripts
+ln -sFhv ${BASEDIR}/bin/ ~/bin
+
+
