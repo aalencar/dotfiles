@@ -7,7 +7,7 @@ let g:solarized_termcolors=256
 " ------------
 "  Vundle
 " ------------
-
+set nocompatible
 filetype off
 
 " set the runtime path to include Vundle and initialize
@@ -28,6 +28,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'tpope/vim-fugitive'
+Plugin 'vim-syntastic/syntastic'
 
 " ------------
 "  Ultisnips
@@ -41,10 +43,26 @@ let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips'
 " ------------
 "  NERDTree
 " ------------
-noremap § :NERDTreeToggle<CR>
 let g:NERDTreeWinSize=55
 let NERDTreeIgnore = ['\.class$', '\.map$']
 
+" ------------
+"  Syntastic
+" ------------
+" config
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['jshint']
+
+" automatic formating on save
+"autocmd bufwritepost *.js silent !standard --fix %
+"set autoread
 " ------------
 
 " All of your Plugins must be added before the following line
@@ -66,6 +84,7 @@ syntax enable
 syntax on 
 
 " make vim try to detect file types and load plugins for them
+
 filetype on
 filetype plugin indent on
 filetype indent on
@@ -86,6 +105,11 @@ set hidden
 "  Editing
 " ------------
 
+" toggle invisible characters
+set list
+set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
+set showbreak=↪
+
 " don't highlight searchs by default
  set nohlsearch
 
@@ -98,46 +122,68 @@ set textwidth=80
 set colorcolumn=80
 highlight ColorColumn ctermbg=black
 
-set autoindent  " autoindent based on line above, works most of the time
-set smartindent " smarter indent for C-like languages
-set shiftwidth=2 " when reading, tabs are 4 spaces
-set softtabstop=2 " in insert mode, tabs are 4 spaces
+" indentation
+set autoindent  	" autoindent based on line above, works most of the time
+set smartindent 	" smarter indent for C-like languages
 
-set scrolloff=3
+" tab settings
+set noexpandtab 	" always use tabs
+set tabstop=4		" how many spaces a <Tab> counts for
+set shiftwidth=4	" how many spaces when identing
 
-set relativenumber 
-set number 
+" tab setup for html files
+au Filetype html setlocal shiftwidth=2 tabstop=2 softtabstop=2
 
-set backspace=indent,eol,start
+set scrolloff=3		" minimal number of lines to keep above and bellow the cursor
 
-" Always shows the file name at the bottom
+set number 			" display line number
+set relativenumber	" display the line number relative to the line with the cursor
+
+set backspace=indent,eol,start 
+
+" always shows the file name at the bottom
 set laststatus=2
-set statusline+=%f
 
 au BufNewFile,BufFilePre,BufRead *.ts set filetype=javascript
+
 " ------------
 "  Style
 " ------------
 set background=dark
+let g:solarized_termcolors = 16
 
 " ------------------------------------------------------------------------
 "  SHORCUTS 
 " ------------------------------------------------------------------------
 
 " leader
-let mapleader = "\<Space>"
+let mapleader = ","
 
 " ------------
-"  Plugins 
+"  Plugins
 " ------------
+"  UltiSnips
 noremap <leader>u :UltiSnipsEdit<CR>
+
+" vim-fugitive
+noremap <leader>gc :Gcommit<CR>
+noremap <leader>gd :Gdiff<CR>
+noremap <leader>gs :Gstatus<CR>
+noremap <leader>gp :Gpush<CR>
+noremap <leader>gl :Glog<CR>
+
+noremap [q :cn<CR>
+noremap [p :cp<CR>
+
+" NERDTree
+noremap § :NERDTreeToggle<CR>
 
 " ------------
 "  Editing 
 " ------------
 noremap <leader>a ggVG
-vmap <leader>y "*y
-vmap <leader>p "*p
+vmap <leader>Y "*y
+vmap <leader>P "*p
 
 " comment stuff out
 noremap <leader>/ I//<ESC>
@@ -146,14 +192,27 @@ noremap <leader>d/ ^2x
 " ------------
 "  Navigation 
 " ------------
+" moving up and down as expected
 nnoremap j gj
 nnoremap k gk
 
+" scroll the viewport 3x faster
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
 " ------------
-"  Files 
+" Files 
 " ------------
+" vim
 noremap <leader>ev :e $MYVIMRC<CR>
 noremap <leader>sv :source $MYVIMRC<CR>
+
+" tmux
+noremap <leader>et :e $TMUXCONF<CR>
+noremap <leader>es :e ~/.tmux-sessions/<CR>
+
+" bash
+noremap <leader>eb :e ~/.bashrc<CR>
 
 noremap <leader>w :w<CR> 
 noremap <leader>q :q<CR>
@@ -175,11 +234,14 @@ noremap <leader>- :split %<CR>
 " ------------
 "  Buffers
 " ------------
+" switch to next and previous buffers
 noremap <leader>n :bn<CR>
+noremap <leader>p :bp<CR>
+noremap <leader>l :bl<CR>
 
 " map <leader><leader> to switch to the last buffer 
 " you had open in the pane you are currently in
-noremap <leader><leader> <C-^>
+noremap <leader>. <C-^>
 
 " ------------------------------------------------------------------------
 "  DEVELOPMENT
