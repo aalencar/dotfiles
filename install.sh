@@ -7,5 +7,6 @@ ln -sf ${BASEDIR}/vim/vimrc ~/.vimrc
 
 # tmux
 ln -sf ${BASEDIR}/tmux/tmux.conf ~/.tmux.conf
-ln -sf ${BASEDIR}/tmux/tmux.sessions/ ~/.tmux-sessions
+ln -sf ${BASEDIR}/tmux/tmux.sessions ~/.tmux-sessions
+echo ${BASEDIR}
 
