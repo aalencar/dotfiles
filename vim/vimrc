@@ -159,6 +159,11 @@ let g:solarized_termcolors = 16
 " leader
 let mapleader = ","
 
+" good habits
+inoremap <CR> <C-o>:throw 'Use C-j instead of Enter'<CR>
+inoremap <BS> <C-o>:echoerr 'Use C-h instead of Backspace'<CR>
+noremap <ESC> <C-o>:echoerr 'Use C-c instead of ESC'<CR>i
+
 " ------------
 "  Plugins
 " ------------
@@ -177,10 +182,10 @@ noremap [p :cp<CR>
 
 " NERDTree
 noremap § :NERDTreeToggle<CR>
+
 " ------------
 "  Editing 
 " ------------
-inoremap <CR> <C-o>:throw 'Use C-j instead of Enter'<CR>
 noremap <leader>a ggVG
 vmap <leader>Y "*y
 vmap <leader>P "*p
