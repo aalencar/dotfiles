@@ -1,5 +1,8 @@
 " Author: Alexandre Alencar 
+" I highly recommend you to copy whatever you want form this vimrc file,
+" though it was customized for my needs, so keep that in mind.
 let g:solarized_termcolors=256
+
 " ------------------------------------------------------------------------
 "  PLUGINS MANAGEMENTS
 " ------------------------------------------------------------------------
@@ -7,6 +10,7 @@ let g:solarized_termcolors=256
 " ------------
 "  Vundle
 " ------------
+"  enter the current millenium
 set nocompatible
 filetype off
 
@@ -30,6 +34,8 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tpope/vim-fugitive'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'jiangmiao/auto-pairs'
 
 " ------------
 "  Ultisnips
@@ -47,6 +53,11 @@ let g:NERDTreeWinSize=55
 let NERDTreeIgnore = ['\.class$', '\.map$']
 
 " ------------
+"  Ctrl-P
+" ------------
+let g:ctrlp_working_path_mode = 'ra'
+
+" ------------
 "  Syntastic
 " ------------
 " config
@@ -58,11 +69,13 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+" javascript
 let g:syntastic_javascript_checkers = ['jshint']
 
-" automatic formating on save
-"autocmd bufwritepost *.js silent !standard --fix %
-"set autoread
+" html
+let g:syntastic_disabled_filetypes = ['html']
+
 " ------------
 
 " All of your Plugins must be added before the following line
@@ -144,7 +157,7 @@ set backspace=indent,eol,start
 " always shows the file name at the bottom
 set laststatus=2
 
-au BufNewFile,BufFilePre,BufRead *.ts set filetype=javascript
+"au BufNewFile,BufFilePre,BufRead *.ts set filetype=javascript
 
 " ------------
 "  Style
@@ -156,13 +169,14 @@ let g:solarized_termcolors = 16
 "  SHORCUTS 
 " ------------------------------------------------------------------------
 
+nnoremap ; :
+nnoremap : ;
+
 " leader
 let mapleader = ","
 
 " good habits
-inoremap <CR> <C-o>:throw 'Use C-j instead of Enter'<CR>
-inoremap <BS> <C-o>:echoerr 'Use C-h instead of Backspace'<CR>
-noremap <ESC> <C-o>:echoerr 'Use C-c instead of ESC'<CR>i
+inoremap <C-c> <C-o>:throw 'Use C-[ instead of C-c'<CR>
 
 " ------------
 "  Plugins
@@ -187,8 +201,8 @@ noremap § :NERDTreeToggle<CR>
 "  Editing 
 " ------------
 noremap <leader>a ggVG
-vmap <leader>Y "*y
-vmap <leader>P "*p
+vmap <leader>y "*y
+vmap <leader>p "*p
 
 " comment stuff out
 noremap <leader>/ I//<ESC>
@@ -240,8 +254,8 @@ noremap <leader>- :split %<CR>
 "  Buffers
 " ------------
 " switch to next and previous buffers
-noremap <leader>n :bn<CR>
-noremap <leader>p :bp<CR>
+noremap <leader>m :bn<CR>
+noremap <leader>n :bp<CR>
 noremap <leader>l :bl<CR>
 
 " map <leader><leader> to switch to the last buffer 
