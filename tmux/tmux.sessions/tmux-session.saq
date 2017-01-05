@@ -1,13 +1,26 @@
 # lemaf saq project development session
-new -s 'SAQ' -n '[DEV] frontend'
-splitw -v -p 20 
-splitw -h
-new-window -n '[SERVER] Ng' 
-new-window -n '[DEV] backend'
-splitw -v -p 20 
-selectp -t :0
-new-window -n '[SERVER] play'
-new-window -n '[DB] psql'
-selectw -t :1
+
+# frontend
+new-session -s SAQ -n 'frontend' -c ~/Work/lemaf-project/ng-lemaf/src
+send-keys -t 'SAQ:frontend.0' 'vim' C-m
+splitw -v -p 25
+splitw -h -p 45 
+send-keys -t 'SAQ:frontend.1' 'cd ~/Work/lemaf-project/ng-lemaf/' C-m
+send-keys -t 'SAQ:frontend.1' 'npm start' C-m
+
+# backend
+new-window -n 'backend' -c ~/Work/lemaf-project/backend/saq-lemaf
+send-keys -t 'SAQ:backend.0' 'vim' C-m
+splitw -v -p 25
+selectp -t top
+send-keys -t bottom 'cd ~/Work/lemaf-project/backend/saq-lemaf' C-m
+send-keys -t bottom 'activator run' C-m
 selectp -t 0
 
+# db
+new-window -n 'psql'
+send-keys -t 'SAQ:psql' 'psql' C-m
+send-keys -t 'SAQ:psql' '\c teste' C-m
+send-keys -t 'SAQ:psql' '\dt' C-m
+selectw -t 'SAQ:frontend'
+selectp -t 0
