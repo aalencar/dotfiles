@@ -1,15 +1,13 @@
 " Author: Alexandre Alencar 
 " I highly recommend you to copy whatever you want form this vimrc file,
 " though it was customized for my needs, so keep that in mind.
-let g:solarized_termcolors=256
 
 " ------------------------------------------------------------------------
 "  PLUGINS MANAGEMENTS
 " ------------------------------------------------------------------------
-
-" ------------
+" ---------------------
 "  Vundle
-" ------------
+" ---------------------
 "  enter the current millenium
 set nocompatible
 filetype off
@@ -23,70 +21,48 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" ------------
-"  Plugins
-" ------------
-
+" ---------------------
+"  List of Plugins
+" ---------------------
 Plugin 'SirVer/ultisnips'
-Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tpope/vim-fugitive'
-Plugin 'vim-syntastic/syntastic'
+"Plugin 'vim-syntastic/syntastic'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tpope/vim-vinegar.git'
 
-" ------------
-"  Ultisnips
-" ------------
+" ------------------
+"  Plugins Config
+" ------------------
+" Ultisnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsEditSplit='vertical'
 let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips'
 
-" ------------
-"  NERDTree
-" ------------
-let g:NERDTreeWinSize=55
-let NERDTreeIgnore = ['\.class$', '\.map$']
-
-" ------------
-"  Ctrl-P
-" ------------
+" Ctrl-P
 let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = 'node_modules\|git'
 
-" ------------
-"  Syntastic
-" ------------
-" config
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" vinegar
+let g:netrw_liststyle = 0
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" ---------------------
 
-" javascript
-let g:syntastic_javascript_checkers = ['jshint']
-
-" html
-let g:syntastic_disabled_filetypes = ['html']
-
-" ------------
-
-" All of your Plugins must be added before the following line
+" All of your Plugins must be added before the following line---------
 call vundle#end()            " required
 
 " ------------------------------------------------------------------------
 "  GENERAL VIM CONFIGURATION
 " ------------------------------------------------------------------------
-
-" be iMproved
-set nocompatible 
+" shows rows and line number
+set ruler
 
 " no swap files
 set noswapfile
@@ -114,9 +90,9 @@ runtime macros/matchit.vim
 " make vim use hidden buffer more liberally
 set hidden
 
-" ------------
+" ---------------------
 "  Editing
-" ------------
+" ---------------------
 
 " toggle invisible characters
 set list
@@ -126,26 +102,24 @@ set showbreak=↪
 " don't highlight searchs by default
  set nohlsearch
 
-" suggestion for normal mode commands
-set wildmenu
-set wildmode=list:longest:full,full
-
-
 set textwidth=80
-set colorcolumn=80
-highlight ColorColumn ctermbg=black
+"set colorcolumn=80
+"highlight ColorColumn ctermbg=black
 
 " indentation
 set autoindent  	" autoindent based on line above, works most of the time
 set smartindent 	" smarter indent for C-like languages
 
-" tab settings
+" ---------------------
+"  Tabs
+" ---------------------
 set noexpandtab 	" always use tabs
 set tabstop=4		" how many spaces a <Tab> counts for
 set shiftwidth=4	" how many spaces when identing
 
 " tab setup for html files
 au Filetype html setlocal shiftwidth=2 tabstop=2 softtabstop=2
+au Filetype typescript setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
 
 set scrolloff=3		" minimal number of lines to keep above and bellow the cursor
 
@@ -156,31 +130,39 @@ set backspace=indent,eol,start
 
 " always shows the file name at the bottom
 set laststatus=2
+set statusline=%{fugitive#statusline()}
+set statusline+=\ -\ 
+set statusline+=%.30F
+set statusline+=%=
+set statusline+=%y\ 
 
 "au BufNewFile,BufFilePre,BufRead *.ts set filetype=javascript
 
-" ------------
+" ---------------------
 "  Style
-" ------------
+" ---------------------
+" For solarized plugin (color scheme)
+" https://github.com/altercation/vim-colors-solarized
+syntax enable
 set background=dark
-let g:solarized_termcolors = 16
+colorscheme solarized
 
 " ------------------------------------------------------------------------
-"  SHORCUTS 
+"  SHORCUTS
 " ------------------------------------------------------------------------
-
 nnoremap ; :
 nnoremap : ;
 
 " leader
 let mapleader = ","
 
-" good habits
 inoremap <C-c> <C-o>:throw 'Use C-[ instead of C-c'<CR>
+inoremap <ESC> <C-o>:throw 'Use jk instead of ESC'<CR>
+inoremap jk <ESC>
 
-" ------------
+" ---------------------
 "  Plugins
-" ------------
+" ---------------------
 "  UltiSnips
 noremap <leader>u :UltiSnipsEdit<CR>
 
@@ -191,26 +173,22 @@ noremap <leader>gs :Gstatus<CR>
 noremap <leader>gp :Gpush<CR>
 noremap <leader>gl :Glog<CR>
 
-noremap [q :cn<CR>
-noremap [p :cp<CR>
+noremap ]q :cn<CR>
+noremap [q :cp<CR>
 
-" NERDTree
-noremap § :NERDTreeToggle<CR>
+" vinegar
+noremap § :Explore<CR>
 
-" ------------
+" ---------------------
 "  Editing 
-" ------------
+" ---------------------
 noremap <leader>a ggVG
 vmap <leader>y "*y
 vmap <leader>p "*p
 
-" comment stuff out
-noremap <leader>/ I//<ESC>
-noremap <leader>d/ ^2x
-
-" ------------
+" ---------------------
 "  Navigation 
-" ------------
+" ---------------------
 " moving up and down as expected
 nnoremap j gj
 nnoremap k gk
@@ -219,9 +197,13 @@ nnoremap k gk
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-" ------------
+" ---------------------
 " Files 
-" ------------
+" ---------------------
+noremap <leader>w :w<CR> 
+noremap <leader>q :q<CR>
+noremap <leader>Q :q!<CR>
+
 " vim
 noremap <leader>ev :e $MYVIMRC<CR>
 noremap <leader>sv :source $MYVIMRC<CR>
@@ -233,13 +215,14 @@ noremap <leader>es :e ~/.tmux-sessions/<CR>
 " bash
 noremap <leader>eb :e ~/.bashrc<CR>
 
-noremap <leader>w :w<CR> 
-noremap <leader>q :q<CR>
-noremap <leader>Q :q!<CR>
+" journal
+noremap <leader>j :vsp ~/journal<CR>
 
-" ------------
+" todo
+noremap <leader>k :vsp ~/TODO<CR>
+" ---------------------
 "  Panes
-" ------------
+" ---------------------
 " swith between panes
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -250,32 +233,46 @@ nnoremap <C-l> <C-w>l
 noremap <leader>\ :vs %<CR>
 noremap <leader>- :split %<CR>
 
-" ------------
-"  Buffers
-" ------------
-" switch to next and previous buffers
-noremap <leader>m :bn<CR>
-noremap <leader>n :bp<CR>
-noremap <leader>l :bl<CR>
+set splitbelow
+set splitright
 
-" map <leader><leader> to switch to the last buffer 
-" you had open in the pane you are currently in
+" ---------------------
+"  Buffers
+" ---------------------
+" switch to next and previous buffers
+noremap <leader>l :ls<CR>
+noremap ]b :bn<CR>
+noremap [b :bp<CR>
 noremap <leader>. <C-^>
 
+" ---------------------
+"  Tabs
+" ---------------------
+noremap <leader>tn :tabnew<CR>
+noremap <leader>m :tabn<CR>
+noremap <leader>n :tabp<CR>
+noremap <leader>to :tabonly<CR>
+noremap <leader>tc :tabclose<CR>
+noremap <leader>1 1gt
+noremap <leader>2 2gt
+noremap <leader>3 3gt
+noremap <leader>4 4gt
+noremap <leader>5 5gt
+noremap <leader>0 :tablast<CR>
+
+" ---------------------
+"  Style
+" ---------------------
+nnoremap bgd :set background=dark<CR>
+nnoremap bgl :set background=light<CR>
 " ------------------------------------------------------------------------
 "  DEVELOPMENT
 " ------------------------------------------------------------------------
-" ------------
+" ---------------------
 "  WebDev 
-" ------------
+" ---------------------
 nnoremap <leader>oc :!open -a /Applications/Google\ Chrome.app %<CR><CR>
 nnoremap <leader>os :!open -a /Applications/Safari.app %<CR><CR>
 
-" ------------
-"  Java 
-" ------------
-noremap <leader>c :!javac *java<CR>
-
-" run it
-noremap <leader>r :!java -cp "../../bin" gamelogic.GameLogicMain<CR>
-
+" Angular 2
+nnoremap <leader>tt :tabnew % <bar> :vsplit %.component.css <bar> :sfind *.html<CR>
