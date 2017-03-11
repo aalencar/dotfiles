@@ -4,7 +4,6 @@
 new-session -s SAQ -n 'frontend' -c ~/Work/lemaf-project/ng-lemaf/src
 send-keys -t 'SAQ:frontend.0' 'vim' C-m
 splitw -v -p 25
-splitw -h -p 45 
 send-keys -t 'SAQ:frontend.1' 'cd ~/Work/lemaf-project/ng-lemaf/' C-m
 send-keys -t 'SAQ:frontend.1' 'npm start' C-m
 
