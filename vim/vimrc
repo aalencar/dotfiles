@@ -1,5 +1,5 @@
 " Author: Alexandre Alencar
-" aalencarvilela@gmail.com
+" alencardev@gmail.com
 " I highly recommend you to copy whatever you want from this vimrc file,
 " though it was customized for my needs, so keep that in mind.
 
@@ -24,25 +24,29 @@ Plugin 'VundleVim/Vundle.vim' " }}}2
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-vinegar.git'
 Plugin 'christoomey/vim-tmux-navigator'
-"Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 "Plugin 'bling/vim-bufferline'
 
 " Programming
-Plugin 'tpope/vim-fugitive'
-Plugin 'gregsexton/gitv'
+Plugin 'tpope/vim-fugitive' " git integration
+Plugin 'gregsexton/gitv'    " display commits
 Plugin 'pangloss/vim-javascript'
-Plugin 'ternjs/tern_for_vim'
+" Plugin 'ternjs/tern_for_vim'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'SirVer/ultisnips'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'sjl/gundo.vim'
+Plugin 'tpope/vim-surround'
 "Plugin 'vim-syntastic/syntastic'
+Plugin 'majutsushi/tagbar'
+Plugin 'w0rp/ale' 
 
 " Styling
-Plugin 'majutsushi/tagbar'
-Plugin 'altercation/vim-colors-solarized'
+"Plugin 'altercation/vim-colors-solarized'
+Plugin 'morhetz/gruvbox'
 Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes' " }}}2
+Plugin 'vim-airline/vim-airline-themes'
+" }}}2
 
 "  --------------- Plugins Config --------------- {{{2
 " Ultisnips
@@ -72,6 +76,10 @@ let g:syntastic_check_on_wq = 0
 
 " tagbar
 let g:tagbar_ctags_bin = '/usr/local/Cellar/ctags/5.8_1/bin/ctags'
+
+" autopairs
+let g:AutoPairsFlyMode = 1
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required }}}2
 " }}}1
@@ -80,6 +88,7 @@ call vundle#end()            " required }}}2
 
 " --------------- Misc --------------- {{{2
 set ttyfast " faster redraw
+set termguicolors
 
 " make vim try to detect file types and load plugins for them
 filetype on
@@ -114,7 +123,7 @@ set backspace=indent,eol,start
 
 " toggle invisible characters
 set list
-set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
+set listchars=tab:→\ ,trail:⋅,extends:❯,precedes:❮
 set showbreak=↪
 
 
@@ -144,7 +153,7 @@ set softtabstop=4   " number of tabs when in insert mode
 
 " tab setup for html files
 au Filetype html setlocal shiftwidth=2 tabstop=2 softtabstop=2
-au Filetype typescript setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
+au Filetype typescript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 au Filetype css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 " }}}2
 
@@ -153,7 +162,7 @@ au Filetype css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 " https://github.com/altercation/vim-colors-solarized
 syntax enable
 set background=dark
-colorscheme solarized
+colorscheme gruvbox
 " }}}2
 " }}}1
 
@@ -190,6 +199,7 @@ noremap § :Explore<CR>
 
 " Gundo
 nnoremap <leader>u :GundoToggle<CR>
+
 " }}}2
 
 "  --------------- Editing  --------------- {{{2
@@ -265,8 +275,8 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " maps to split window
-noremap <leader>\ :throw 'use "c-w v" instead of "leader \"'<cr>
-noremap <leader>- :throw 'use "c-w s" instead of "leader -"'<cr>
+noremap <leader>\ :vsplit<CR>
+noremap <leader>- :split<CR>
 " }}}2
 
 "  --------------- Development --------------- {{{2
