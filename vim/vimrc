@@ -24,7 +24,7 @@ Plugin 'VundleVim/Vundle.vim' " }}}2
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-vinegar.git'
 Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdtree'
 "Plugin 'bling/vim-bufferline'
 
 " Programming
@@ -42,7 +42,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'w0rp/ale' 
 
 " Styling
-"Plugin 'altercation/vim-colors-solarized'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'morhetz/gruvbox'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
