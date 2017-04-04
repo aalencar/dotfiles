@@ -6,6 +6,7 @@ alias   saq="cd ~/Work/SAQ/saq-frontend/src/app"
 alias   web="cd ~/Programming/webdev/"
 alias   study="cd ~/Programming/webdev/study"
 alias   dot="cd ~/dotfiles"
+alias   pro="cd ~/Programming"
 
 alias trash="rmtrash"
 alias   del="rmtrash"
