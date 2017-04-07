@@ -26,6 +26,7 @@ Plugin 'tpope/vim-vinegar.git'
 Plugin 'christoomey/vim-tmux-navigator'
 "Plugin 'scrooloose/nerdtree'
 "Plugin 'bling/vim-bufferline'
+Plugin 'easymotion/vim-easymotion'
 
 " Programming
 Plugin 'tpope/vim-fugitive' " git integration
@@ -37,15 +38,23 @@ Plugin 'SirVer/ultisnips'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'sjl/gundo.vim'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
 "Plugin 'vim-syntastic/syntastic'
 Plugin 'majutsushi/tagbar'
 Plugin 'w0rp/ale' 
+" Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/nerdcommenter'
+" Plugin 'skammer/vim-css-color'
 
 " Styling
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'morhetz/gruvbox'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+
+" Others
+Plugin 'takac/vim-spotifysearch'
+
 " }}}2
 
 "  --------------- Plugins Config --------------- {{{2
@@ -79,6 +88,9 @@ let g:tagbar_ctags_bin = '/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 
 " autopairs
 let g:AutoPairsFlyMode = 1
+
+" YouCompletMe
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required }}}2
@@ -138,7 +150,8 @@ set smartcase       " case-sensitive searching only when a capital letter appear
 
 " --------------- Folding --------------- {{{2
 "set foldcolumn=4                " display folding level on left bar
-set foldlevelstart=3            " open most folds by default }}}
+set foldlevelstart=1            " open most folds by default }}}
+set foldnestmax=2
 
 "  --------------- Indentation --------------- {{{2
 set autoindent      " autoindent based on line above, works most of the time
@@ -172,13 +185,14 @@ nnoremap ; :
 nnoremap : ;
 
 " --------------- Good Habits--------------- {{{2
-inoremap <c-c> <c-o>:throw 'use c-[ instead of c-c'<cr>
+vnoremap <c-[> <c-o>:throw 'Use C-J C-K instead of c-c'<cr>
 inoremap <ESC> <C-o>:throw 'Use jk instead of ESC'<CR>
-nnoremap zo :throw 'Use "space" to open/close folds'<CR>
-nnoremap zc :throw 'Use "space" to open/close folds'<CR>
+"nnoremap zo :throw 'Use "space" to open/close folds'<CR>
+"nnoremap zc :throw 'Use "space" to open/close folds'<CR>
 nnoremap $ :throw 'Use "E" instead of $'<CR>
 nnoremap ^ :throw 'Use "B" instead of ^'<CR>
 inoremap jk <ESC>
+vnoremap <C-J><C-K> <ESC>
 " }}}2
 
 "  --------------- Plugins --------------- {{{2
@@ -200,13 +214,49 @@ noremap § :Explore<CR>
 " Gundo
 nnoremap <leader>u :GundoToggle<CR>
 
+" Gitv
+nnoremap <leader>gv :Gitv<CR>
+
+" Spotify search
+nnoremap <leader>sp :Spotify 
+
+" vundle
+nnoremap <leader>pi :source $MYVIMRC <bar> PluginInstall<CR>
+
+" easymotion
+map  <Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader>f <Plug>(easymotion-overwin-f)
+
+" s{char}{char} to move to {char}{char}
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Move to line
+map <Leader>l <Plug>(easymotion-bd-jk)
+nmap <Leader>l <Plug>(easymotion-overwin-line)
+
+" Move to word
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
+
 " }}}2
 
 "  --------------- Editing  --------------- {{{2
+" Visual select the whole file
 noremap <leader>a ggVG
-vmap <leader>y "*y
-vmap <leader>p "*p
+" Correctly indent the whole file
+noremap <leader>= maggVG='a
+" TODO: Find a better way to paste, this method isn't working
+vnoremap <leader>y "*y
+vmap <leader>cy di<C-R>*
+vmap <leader>p "*
+" Paste register " when in insert mode
+inoremap <C-F> <C-R>"
+" Paste register * (clipboard) when in insert mode
+inoremap <C-G> <C-R>*
+" Goes to the last place something was select in visual mode
 nnoremap gV `[v`]
+" Goes to the last place something was inserted
+nnoremap gi `[i<ESC>
 " }}}2
 
 " --------------- Searching --------------- {{{2
@@ -249,6 +299,9 @@ noremap <leader>es :e ~/.tmux-sessions/<CR>
 " bash
 noremap <leader>eb :e ~/.bashrc<CR>
 
+" zsh
+noremap <leader>ez :e ~/.zshrc<CR>
+
 " journal
 noremap <leader>j :e ~/journal<CR>
 
@@ -257,26 +310,30 @@ noremap <leader>k :e ~/TODO<CR>
 " }}}2
 
 "  --------------- Buffers --------------- {{{2
-" switch to next and previous buffers
-noremap <leader>l :ls<CR>
-noremap ]b :bn<CR>
-noremap [b :bp<CR>
-noremap ]B :bl<CR>
-noremap [B :bf<CR>
+" switch to next and previous buffer
+noremap <C-m> :bn<CR>
+noremap <C-n> :bp<CR>
+"noremap <leader>. :bn<CR>
+"noremap <leader>m :bp<CR>
+" switch to first and last buffer
+"noremap <C-S-N> :bf<CR>
+"noremap <C-S-M> :bl<CR>
+" delete buffer
 noremap <leader>d :bd<CR>
-noremap <leader>. <C-^>
+"TODO: find a better mapping
+noremap <C-@> <C-^>
 " }}}2
 
-"  --------------- Panes --------------- {{{2
-" swith between panes
+"  --------------- Windows --------------- {{{2
+" swith between window
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " maps to split window
-noremap <leader>\ :vsplit<CR>
-noremap <leader>- :split<CR>
+"noremap <leader>\ :vsplit<CR>
+"noremap <leader>- :split<CR>
 " }}}2
 
 "  --------------- Development --------------- {{{2
@@ -297,12 +354,12 @@ nnoremap <leader>bl :set background=light<CR>
 " popolates the args list with the quickfix files
 command! -nargs=0 -bar Qargs execute 'args ' . QuickfixFilenames()
 function! QuickfixFilenames()
-  " Building a hash ensures we get each buffer only once
-  let buffer_numbers = {}
-  for quickfix_item in getqflist()
-    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
-  endfor
-  return join(values(buffer_numbers))
+    " Building a hash ensures we get each buffer only once
+    let buffer_numbers = {}
+    for quickfix_item in getqflist()
+        let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+    endfor
+    return join(values(buffer_numbers))
 endfunction
 " }}}1
 

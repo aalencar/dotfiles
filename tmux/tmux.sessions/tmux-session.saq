@@ -1,18 +1,18 @@
 # lemaf saq project development session
 
 # frontend
-new-session -s SAQ -n 'frontend' -c ~/Work/lemaf-project/ng-lemaf/src
+new-session -s SAQ -n 'frontend' -c ~/Work/SAQ/saq-frontend/src/app/
 send-keys -t 'SAQ:frontend.0' 'vim' C-m
 splitw -v -p 25
-send-keys -t 'SAQ:frontend.1' 'cd ~/Work/lemaf-project/ng-lemaf/' C-m
+send-keys -t 'SAQ:frontend.1' 'cd ~/Work/SAQ/saq-frontend/' C-m
 send-keys -t 'SAQ:frontend.1' 'npm start' C-m
 
 # backend
-new-window -n 'backend' -c ~/Work/lemaf-project/backend/saq-lemaf
+new-window -n 'backend' -c ~/Work/SAQ/backend/saq-lemaf
 send-keys -t 'SAQ:backend.0' 'vim' C-m
 splitw -v -p 25
 selectp -t top
-send-keys -t bottom 'cd ~/Work/lemaf-project/backend/saq-lemaf' C-m
+send-keys -t bottom 'cd ~/Work/SAQ/backend/saq-lemaf' C-m
 send-keys -t bottom 'activator run' C-m
 selectp -t 0
 
