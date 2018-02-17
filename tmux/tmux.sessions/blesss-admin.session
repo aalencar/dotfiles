@@ -1,0 +1,26 @@
+# bless dev session
+
+# Frontend
+new-session -s BLESSS -n '[FRONTEND] Admin' -c ~/Work/Blesss/blesssadmin/src
+send-keys -t 'BLESS:[FRONTEND] Admin.0' 'vim' C-m
+splitw -v -p 25
+selectp -t top
+send-keys -t bottom 'cd ~/Work/Blesss/blesssadmin/src' C-m
+send-keys -t bottom 'npm start' C-m
+selectp -t top
+
+# API
+new-window -n '[BACKEND] Admin' -c ~/Work/Blesss/blesss-admin-api/src
+send-keys -t '[BACKEND] Admin' 'vim' C-m
+splitw -v -p 25
+send-keys -t '[BACKEND] Admin' 'cd ~/Work/Blesss/blesss-admin-api/src' C-m
+send-keys -t '[BACKEND] Admin' 'nodemon server.js' C-m
+selectp -t 0
+
+# DB
+new-window -n '[DB] Postres'
+send-keys -t 'BLESS:DB.0' 'psql' C-m
+send-keys -t 'BLESS:DB.0' '\c blesss_development' C-m
+send-keys -t 'BLESS:DB.0' '\dt' C-m
+
+selectw -t 'BLESS:[FRONTEND] Admin.0'

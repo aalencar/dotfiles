@@ -1,7 +1,6 @@
 # session1
 new -s 'dev' -n 'vim'
-splitw -v -p 20 
-new-window -n 'ng server' 
+splitw -h -p 30
 selectw -t 0
 selectp -t 0
 

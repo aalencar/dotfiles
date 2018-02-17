@@ -1,0 +1,26 @@
+# bless dev session
+
+# API
+new-session -s BLESS -n 'API' -c ~/Work/Blesss/blesssapi/src
+send-keys -t 'BLESS:API.0' 'vim' C-m
+splitw -v -p 25
+send-keys -t 'BLESS:API.1' 'cd ~/Work/Blesss/blesssapi/' C-m
+send-keys -t 'BLESS:API.1' 'npm run dev' C-m
+selectp -t 0
+
+# DB
+new-window -n 'DB'
+send-keys -t 'BLESS:DB.0' 'psql' C-m
+send-keys -t 'BLESS:DB.0' '\c blesss_development' C-m
+send-keys -t 'BLESS:DB.0' '\dt' C-m
+
+# Frontend
+new-window -n 'Assinante' -c ~/Work/Blesss/blesssassinante/src
+send-keys -t 'BLESS:Assinante.0' 'vim' C-m
+splitw -v -p 25
+selectp -t top
+send-keys -t bottom 'cd ~/Work/Blesss/blesssassinante' C-m
+send-keys -t bottom 'npm run dev' C-m
+selectp -t top
+
+selectw -t 'BLESS:API.0'

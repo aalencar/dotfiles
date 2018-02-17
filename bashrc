@@ -29,13 +29,11 @@ alias  tks="tmux kill-server"
 alias    rm="echo Use 'del', or the full path i.e. '/bin/rm'"
 
 # -------------
-# config
+# Variables
 # -------------
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-export CDPATH=".:~:~/Work/SAQ/:~/Work/SAQ/::~/Programming/webdev/ng2"
+export CDPATH=".:~:~/Development:~/Work/:~/Work/Blesss/:~/Development/webdev/ng2"
 
-
-source ~/.xsh
-
+export EDITOR=vim
