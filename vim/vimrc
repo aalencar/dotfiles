@@ -22,11 +22,12 @@ Plugin 'VundleVim/Vundle.vim' " }}}2
 " --------------- List of Plugins --------------- {{{2
 " Navigation
 Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-vinegar.git'
+"Plugin 'tpope/vim-vinegar.git'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'scrooloose/nerdtree'
 "Plugin 'bling/vim-bufferline'
-"Plugin 'easymotion/vim-easymotion'
+Plugin 'easymotion/vim-easymotion'
+"Plugin 'rking/ag.vim'
 
 " Programming
 Plugin 'tpope/vim-fugitive' " git integration
@@ -34,33 +35,39 @@ Plugin 'tpope/vim-fugitive' " git integration
 "Plugin 'gregsexton/gitv'    " display commits
 Plugin 'pangloss/vim-javascript'
 Plugin 'leafgarland/typescript-vim'
-"Plugin 'SirVer/ultisnips'
 Plugin 'jiangmiao/auto-pairs'
 "Plugin 'sjl/gundo.vim'
 Plugin 'tpope/vim-surround'
 "Plugin 'tpope/vim-repeat'
 " Plugin 'majutsushi/tagbar'
-"Plugin 'w0rp/ale'
 "Plugin 'Valloric/YouCompleteMe'
-" Plugin 'scrooloose/nerdcommenter'
 " Correct indentation of css/js inside html
-" Plugin 'othree/html5.vim'
+Plugin 'othree/html5.vim'
 "Plugin 'mxw/vim-jsx'
-Plugin 'posva/vim-vue'
+"Plugin 'posva/vim-vue'
 " Plugin 'ternjs/tern_for_vim'
 "Plugin 'airblade/vim-gitgutter'
 Plugin 'alvan/vim-closetag'
+"Plugin 'elzr/vim-json'
+Plugin 'scrooloose/nerdcommenter'
+"Plugin 'airblade/vim-gitgutter'
+Plugin 'SirVer/ultisnips'
+"Plugin 'w0rp/ale'
 
 " Style
 Plugin 'altercation/vim-colors-solarized'
 "Plugin 'morhetz/gruvbox'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'morhetz/gruvbox'
+
+Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
 
 " Misc
 "
 " tracks time spent on vim
-Plugin 'wakatime/vim-wakatime'
+"Plugin 'wakatime/vim-wakatime'
 
 " }}}2
 
@@ -76,6 +83,8 @@ let g:UltiSnipsSnippetsDir='~/.vim/UltiSnips'
 "let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = 'node_modules\|git'
 let g:ctrlp_show_hidden = 1
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+let g:ctrlp_by_filename = 1
 
 " vinegar
 let g:netrw_liststyle = 0
@@ -86,6 +95,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 "let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_powerline_fonts = 1
+let g:ale_completion_eabled=1
 
 " tagbar
 let g:tagbar_ctags_bin = '/usr/local/Cellar/ctags/5.8_1/bin/ctags'
@@ -97,14 +107,26 @@ let g:AutoPairsFlyMode = 1
 let g:jsx_ext_required = 0
 
 " ale
-let g:ale_linters = {'javascript': ['eslint']}
-"let g:ale_keep_list_window_open = 1
+let g:ale_linters = {'javascript': ['eslint'], 'typescript': ['tslint']}
+let g:ale_keep_list_window_open = 1
+let g:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'] }
+let g:ale_fix_on_save=1
 
 let g:vue_disable_pre_processors = 1
 
 let NERDTreeShowLineNumbers = 1
+let NERDTreeShowBookmarks=1
+let NERDTreeWinSize=50
+let NERDTreeShowLineNumbers=1
 let g:NERDTreeQuitOnOpen = 1
 autocmd FileType nerdtree setlocal relativenumber
+
+" Nerdcommenter
+let g:NERDSpaceDelims=1
+
+let g:EasyMotion_smartcase=1
+
+let g:UltiSnipsExpandTrigger="<tab>"
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required }}}2
@@ -114,7 +136,11 @@ call vundle#end()            " required }}}2
 
 " --------------- Misc --------------- {{{2
 set ttyfast " faster redraw
+set lazyredraw
 autocmd! bufwritepost $MYVIMRC source $MYVIMRC
+set updatetime=100
+"set splitbelow
+set splitright
 
 " just copy and paste from system clipboard using y and p
 "set clipboard=unnamed
@@ -134,7 +160,7 @@ set autoread                    " reload files changed outside vim
 set encoding=utf-8              " encoding is utf 8
 set nobackup
 runtime macros/matchit.vim      " enable matchit plugins which ships with vim and enhances '%'
-au BufNewFile,BufRead * set noexpandtab
+au BufNewFile,BufRead * set expandtab
 au FileType html set fdm=indent
 au BufNewFile,BufRead *.ejs set ft=html " }}}2
 
@@ -145,12 +171,13 @@ set relativenumber              " display the line number relative to the line w
 set showcmd                     " show last command entered in the bottom bar"
 set wildmenu                    " visual autocomplete for command menu
 set laststatus=2                " always shows the file name at the bottom }}}2
+" set cursorline
 
 "  --------------- Editing --------------- {{{2
 set backspace=indent,eol,start
 
 " toggle invisible characters
-"set list
+set list
 set listchars=tab:→\ ,trail:⋅,extends:❯,precedes:❮
 set showbreak=↪
 " }}}2
@@ -162,10 +189,10 @@ set ignorecase      " the case of normal letters is ignored.
 set smartcase       " case-sensitive searching only when a capital letter appears" }}}2
 
 " --------------- Folding --------------- {{{2
-set foldcolumn=1                " display folding level on left bar
+"set foldcolumn=1                " display folding level on left bar
 set foldmethod=syntax
-set foldlevelstart=99            " open most folds by default 
-set foldnestmax=5 " }}}2
+set foldlevelstart=99            " open most folds by default
+set foldnestmax=10 " }}}2
 let javascript_fold=1
 
 "  --------------- Indentation --------------- {{{2
@@ -179,18 +206,12 @@ let g:html_indent_style1 = "inc"
 set tabstop=2       " how many spaces a <Tab> counts for
 set shiftwidth=2    " how many spaces when identing
 set softtabstop=2   " number of tabs when in insert mode
-
-" tab setup for html files
-au Filetype html setlocal shiftwidth=2 tabstop=2 softtabstop=2
-au Filetype typescript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-au Filetype css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-"au Filetype javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 " }}}2
 
 "  --------------- Style --------------- {{{2
 syntax enable
 set background=dark
-colorscheme solarized
+colorscheme gruvbox
 " }}}2
 " }}}1
 
@@ -212,11 +233,12 @@ vnoremap <C-J><C-K> <ESC>
 "  --------------- Plugins --------------- {{{2
 " nerdtree
 noremap <C-f> :NERDTreeToggle<CR>
+noremap <leader>f :NERDTreeFind<CR>
 
 " ternjs
-noremap <leader>td :TernDef<CR>
-noremap <leader>tr :TernRef<CR>
-noremap <leader>tc :TernDoc<CR>
+"noremap <leader>td :TernDef<CR>
+"noremap <leader>tr :TernRef<CR>
+"noremap <leader>tc :TernDoc<CR>
 
 "  UltiSnips
 noremap <leader>u :UltiSnipsEdit<CR>
@@ -226,12 +248,14 @@ noremap <leader>gc :Gcommit<CR>
 noremap <leader>gd :Gdiff<CR>
 noremap <leader>gs :Gstatus<CR>
 noremap <leader>gp :Gpush<CR>
+noremap <leader>gf :Gpush<CR>
 noremap <leader>gl :Glog<CR>
-noremap <leader>gg :Ggrep 
-noremap <leader>gm :Gmove 
+noremap <leader>gg :Ggrep
+noremap <leader>gm :Gmove
+noremap <leader>gb :Gblame<CR>
 
 " vinegar
-noremap <leader>f :Explore<CR>
+noremap ` :Explore<CR>
 
 " Gundo
 nnoremap <leader>U :GundoToggle<CR>
@@ -240,7 +264,7 @@ nnoremap <leader>U :GundoToggle<CR>
 nnoremap <leader>gv :Gitv<CR>
 
 " Spotify search
-nnoremap <leader>sp :Spotify 
+nnoremap <leader>sp :Spotify
 
 " vundle
 nnoremap <leader>pi :source $MYVIMRC <bar> PluginInstall<CR>
@@ -255,6 +279,8 @@ nmap <Leader>l <Plug>(easymotion-overwin-line)
 " Move to word
 map  <Leader>w <Plug>(easymotion-bd-w)
 nmap <Leader>w <Plug>(easymotion-overwin-w)
+
+nnoremap <leader>u :UltiSnipsEdit<CR>
 
 " }}}2
 
@@ -275,18 +301,17 @@ inoremap <C-G> <C-R>*
 nnoremap gV `[v`]
 " Goes to the last place something was inserted
 nnoremap gi `[i<ESC>
-" 
+"
 nnoremap <leader>sl :set list!<CR>
 " }}}2
 
 " --------------- Searching --------------- {{{2
-nnoremap <leader>hl :set hlsearch!<CR>
+nnoremap <leader>hl :noh<CR>
 " }}}2
 
 " --------------- Folding --------------- {{{2
-" open/close folds 
-nnoremap <leader><leader> za
-" }}}2
+" open/close folds
+nnoremap <tab> za " }}}2
 
 "  --------------- Navigation  --------------- {{{2
 " moving up and down as expected
@@ -314,7 +339,7 @@ noremap <leader>rl :set relativenumber!<CR>
 " }}}2
 
 " --------------- Files  --------------- {{{2
-noremap <leader>w :w<CR> 
+noremap <leader>w :w<CR>
 noremap <leader>q :q<CR>
 noremap <leader>Q :q!<CR>
 
@@ -336,15 +361,14 @@ noremap <leader>ez :e ~/.zshrc<CR>
 noremap <leader>j :e ~/journal<CR>
 
 " todo
-noremap <leader>k :e ~/TODO<CR>
+noremap <leader>t :e ~/TODO<CR>
 " }}}2
 
 "  --------------- Buffers --------------- {{{2
 " switch to next and previous buffer
 nnoremap ]b :bn<CR>
 nnoremap [b :bp<CR>
-noremap <leader>d :Kwbd<CR>
-noremap <leader>D :bdelete<CR>
+nnoremap <leader>d :bp<bar>bd #<CR>
 noremap <leader>bo :%bd<bar>e#<CR>
 noremap <C-@> <C-^>
 " }}}2
@@ -367,5 +391,14 @@ nnoremap <leader>2 :set sw=2 ts=2 sts=2<CR>
 nnoremap <leader>4 :set sw=4 ts=4 sts=4<CR>
 " }}}2
 " }}}1
+
+nnoremap <F10> %s/'*\(\$*\w\+-*\w\+\)'*\ze:/"\1"/gc<CR>
+nnoremap <leader>hh :hide<CR>
+nnoremap <leader>2 :diffget //2<CR>
+nnoremap <leader>3 :diffget //3<CR>
+nnoremap <leader>ya ggVGy
+nnoremap <leader>tn :tabnew<CR>
+
+nnoremap <F4> :set pastetoggle<CR>
 
 " vim:foldmethod=marker:foldlevel=0
