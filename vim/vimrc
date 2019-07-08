@@ -22,7 +22,7 @@ Plugin 'VundleVim/Vundle.vim' " }}}2
 " --------------- List of Plugins --------------- {{{2
 " Navigation
 Plugin 'kien/ctrlp.vim'
-"Plugin 'tpope/vim-vinegar.git'
+Plugin 'tpope/vim-vinegar.git'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'scrooloose/nerdtree'
 "Plugin 'bling/vim-bufferline'
@@ -57,12 +57,14 @@ Plugin 'SirVer/ultisnips'
 " Style
 Plugin 'altercation/vim-colors-solarized'
 "Plugin 'morhetz/gruvbox'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+" Plugin 'vim-airline/vim-airline'
+" Plugin 'vim-airline/vim-airline-themes'
 Plugin 'morhetz/gruvbox'
 
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'kristijanhusak/vim-js-file-import', {'do': 'npm install'}
+Plugin 'tpope/vim-projectionist'
+Plugin 'dhruvasagar/vim-zoom'
 
 " Misc
 "
@@ -128,7 +130,20 @@ let g:EasyMotion_smartcase=1
 
 let g:UltiSnipsExpandTrigger="<tab>"
 
-" All of your Plugins must be added before the following line
+" Projectionist
+let g:projectionist_heuristics = {
+      \ '*': {
+        \ '*.ts': {
+          \ 'alternate': '{dirname}/{basename}.html',
+          \ 'type': 'source'
+        \},
+        \ '*.html': {
+          \ 'alternate': '{dirname}/{basename}.ts',
+          \ 'type': 'template'
+        \}
+      \}
+    \}
+"All of your Plugins must be added before the following line
 call vundle#end()            " required }}}2
 " }}}1
 
@@ -139,7 +154,7 @@ set ttyfast " faster redraw
 set lazyredraw
 autocmd! bufwritepost $MYVIMRC source $MYVIMRC
 set updatetime=100
-"set splitbelow
+set splitbelow
 set splitright
 
 " just copy and paste from system clipboard using y and p
@@ -233,7 +248,7 @@ vnoremap <C-J><C-K> <ESC>
 "  --------------- Plugins --------------- {{{2
 " nerdtree
 noremap <C-f> :NERDTreeToggle<CR>
-noremap <leader>f :NERDTreeFind<CR>
+" noremap <leader>f :Explore<CR>
 
 " ternjs
 "noremap <leader>td :TernDef<CR>
@@ -253,9 +268,6 @@ noremap <leader>gl :Glog<CR>
 noremap <leader>gg :Ggrep
 noremap <leader>gm :Gmove
 noremap <leader>gb :Gblame<CR>
-
-" vinegar
-noremap ` :Explore<CR>
 
 " Gundo
 nnoremap <leader>U :GundoToggle<CR>
@@ -400,5 +412,6 @@ nnoremap <leader>ya ggVGy
 nnoremap <leader>tn :tabnew<CR>
 
 nnoremap <F4> :set pastetoggle<CR>
+nnoremap <leader>a :A<CR>
 
 " vim:foldmethod=marker:foldlevel=0
