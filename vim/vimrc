@@ -53,12 +53,13 @@ Plugin 'scrooloose/nerdcommenter'
 "Plugin 'airblade/vim-gitgutter'
 Plugin 'SirVer/ultisnips'
 "Plugin 'w0rp/ale'
+Plugin 'severin-lemaignan/vim-minimap'
 
 " Style
 Plugin 'altercation/vim-colors-solarized'
 "Plugin 'morhetz/gruvbox'
-" Plugin 'vim-airline/vim-airline'
-" Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'morhetz/gruvbox'
 
 Plugin 'ludovicchabant/vim-gutentags'
@@ -121,7 +122,7 @@ let NERDTreeShowBookmarks=1
 let NERDTreeWinSize=50
 let NERDTreeShowLineNumbers=1
 let g:NERDTreeQuitOnOpen = 1
-autocmd FileType nerdtree setlocal relativenumber
+" autocmd FileType nerdtree setlocal relativenumber
 
 " Nerdcommenter
 let g:NERDSpaceDelims=1
@@ -154,7 +155,7 @@ set ttyfast " faster redraw
 set lazyredraw
 autocmd! bufwritepost $MYVIMRC source $MYVIMRC
 set updatetime=100
-set splitbelow
+" set splitbelow
 set splitright
 
 " just copy and paste from system clipboard using y and p
@@ -182,7 +183,7 @@ au BufNewFile,BufRead *.ejs set ft=html " }}}2
 " --------------- UI --------------- {{{2
 set scrolloff=3                 " minimal number of lines to keep above and bellow the cursor
 set number                      " display line number
-set relativenumber              " display the line number relative to the line with the cursor
+" set relativenumber              " display the line number relative to the line with the cursor
 set showcmd                     " show last command entered in the bottom bar"
 set wildmenu                    " visual autocomplete for command menu
 set laststatus=2                " always shows the file name at the bottom }}}2
@@ -413,5 +414,7 @@ nnoremap <leader>tn :tabnew<CR>
 
 nnoremap <F4> :set pastetoggle<CR>
 nnoremap <leader>a :A<CR>
+set fillchars=fold:\ 
+highlight EndOfBuffer ctermfg=black ctermbg=black
 
 " vim:foldmethod=marker:foldlevel=0
