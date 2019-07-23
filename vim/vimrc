@@ -257,7 +257,7 @@ noremap gc :Gcommit<CR>
 noremap gd :Gdiff<CR>
 noremap gs :Gstatus<CR>
 noremap gp :Gpush<CR>
-noremap gf :Gpush<CR>
+" noremap gf :Gpush<CR>
 noremap gl :Glog<CR>
 " noremap gg :Ggrep
 noremap gm :Gmove
@@ -372,8 +372,8 @@ noremap <leader>t :e ~/TODO<CR>
 
 "  --------------- Buffers --------------- {{{2
 " switch to next and previous buffer
-nnoremap ]b :bn<CR>
-nnoremap [b :bp<CR>
+nnoremap <S-j> :bp<CR>
+nnoremap <S-k> :bn<CR>
 nnoremap <leader>d :bp<bar>bd #<CR>
 noremap <leader>bo :%bd<bar>e#<CR>
 noremap <C-@> <C-^>
@@ -403,12 +403,10 @@ nnoremap <leader>hh :hide<CR>
 nnoremap <leader>2 :diffget //2<CR>
 nnoremap <leader>3 :diffget //3<CR>
 nnoremap <leader>ya ggVGy
-nnoremap <leader>tn :tabnew<CR>
+" nnoremap <leader>tn :tabnew<CR>
 
 nnoremap <F4> :set pastetoggle<CR>
 nnoremap <leader>a :A<CR>
-nnoremap <S-j> :bp<CR>
-nnoremap <S-k> :bn<CR>
 nnoremap <leader>1 J
 nnoremap <leader>. :CtrlPTag<CR>
 set fillchars=fold:\ "
